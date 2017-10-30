@@ -1,1 +1,262 @@
-# KubernetesRaspberryPI
+# Kubernetes Cluster Setup on Raspberry PI 3
+
+### Author: [Olav Tollefsen](https://www.linkedin.com/in/olavtollefsen/)
+
+## Introduction
+
+This article documents the process of installing a Kubernetes Cluster on Raspberry PI 3 from scratch. It also describes how to run an ASP.NET 2.0 Web Application in a Docker container on the cluster.
+
+### What you will need
+
+- A minimum of 2 x Raspberry PI 3 Model B with Micro SD card, power supply
+- Network cables (I have not gotten this process to work with WiFi only)
+- A switch to create a local network
+- A computer with the ability to connect a Micro SD card and software to burn an image to the card.
+
+## Perform these steps for all the Raspberry PI nodes that will form the Kubernetes cluster
+
+### Prepare the Raspberry PI 3 Operating System on a Micro SD card
+
+On a computer download the Linux operating system for Raspberry PI 3. I'm using Raspbian Stretch Lite, which you can dowload from [The Raspberry Pi Foundation Raspbian Download Page](https://www.raspberrypi.org/downloads/raspbian/).
+
+Burn the downloaded operating system image to the Micro SD card. You will find more details in this [Installation Guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+
+### Add a new user and remove the default user
+
+It's s good idea to create a new user for you on the Raspberry PI and remove the default user.
+
+Add a new user:
+```
+$ sudo adduser <new-username>
+```
+
+Add the new user to sudoers:
+```
+$ sudo usermod -aG sudo <new-username>
+```
+
+To remove the default user you may need to reboot the Raspberry PI, login using the new-username and then perform this command:
+
+```
+$ sudo userdel -r pi
+```
+
+### Configure Networking
+
+I like to set static IP addresses for the Raspberry PI cluster nodes. Add the following to the bottom of the /etc/dhcpcd.conf file:
+
+```
+interface=eth0
+static ip_address=192.168.1.11/24
+static routers=192.168.1.1
+static domain_name_servers=8.8.8.8
+```
+The addresses above are just examples. Replace with the approperiate addresses for your environment.
+
+### Change hostname / enable SSH
+
+Invoke the raspi-config utility to change the hostname and enable SSH:
+```
+sudo raspi-config
+```
+You will find the SSH option under "5 Interfacing Options".
+
+### Disable Sawp
+
+According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479]()https://github.com/kubernetes/kubeadm/issues/479 you will an error installing Kubernetes without disabling swap.
+
+To disable swap:
+```
+$ sudo dphys-swapfile swapoff && \
+  sudo dphys-swapfile uninstall && \
+  sudo update-rc.d dphys-swapfile remove
+```
+
+Add the following to the end of the existing line of `/boot/cmdline.txt`:
+```
+cgroup_enable=cpuset cgroup_enable=memory
+```
+
+### Reboot the Raspberry PI
+```
+$ sudo reboot
+```
+
+### Install Docker
+
+```
+$ curl -fsSL get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+```
+
+To be able to issue Docker commands without sudo:
+```
+$ sudo usermod -aG docker <your-username>
+```
+
+### Install required Kubernetes software
+```
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+  echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+  sudo apt-get update -q && \
+  sudo apt-get install -qy kubeadm
+```
+
+You have now performed the setup that needs to be performed for all the Raspberry PI machines, which will participate in the Kubernetes cluster.
+
+## Setup of the Master machine
+
+Kubernetes clusters consist of two types of machines:
+1. Master
+2. Node (workers)
+
+These steps should only be performed on the machine that will be designated as the Master.
+
+## Initializing your Master
+
+Perform this operation on the Raspberry PI that you want to designate as the Master:
+
+```
+$ sudo kubeadm init
+```
+This step will take a while.
+
+Take a note of the node-join information printed at the end of this command. You will need that information when you join the other machines (Nodes) to the cluster.
+
+### Prepare for riunning kubectl on the Master
+```
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### Install networking for Kubernetes
+```
+$ kubectl apply -f https://git.io/weave-kube-1.6
+```
+
+### Check status
+
+You should see all services up and running (after giving it a few minutes after installing the network).
+```
+$ kubectl get pods --namespace=kube-system
+NAME                                    READY     STATUS    RESTARTS   AGE
+etcd-k8s-master-1                       1/1       Running   0          19h
+kube-apiserver-k8s-master-1             1/1       Running   1          19h
+kube-controller-manager-k8s-master-1    1/1       Running   0          19h
+kube-dns-66ffd5c588-9v2n2               3/3       Running   0          19h
+kube-proxy-874mf                        1/1       Running   0          19h
+kube-scheduler-k8s-master-1             1/1       Running   0          19h
+weave-net-p8vqq                         2/2       Running   0          19h
+```
+
+You have now performed the steps required to setup the Master.
+
+## Join a Node to the cluster
+
+Remember to perform all the common preparation steps first!
+
+Perform this for every machine you want to join as a Node to the Kubernetes cluster. NOTE! Replace the command below with the information you obtained when running "kubeadm init".
+
+```
+$ sudo kubeadm join --token 218b7b.1f188d49758886cb 192.168.1.10:6443 --discovery-token-ca-cert-hash sha256:9b8fc6dcc53e2af8dc1c9093c6b3354f4767a644c1dd9dfeebc19c3c04bd6f17
+```
+
+## Create a Docker container with a .NET Core 2.0 Web Application
+
+These steps needs to be performed on a computer with support for building .NET Core 2.0 applications.
+
+Create a file named Dockerfile.arm32 and save it in the same directory where the .csproj file is located.
+```
+FROM microsoft/dotnet:2.0.0-runtime-stretch-arm32v7
+
+WORKDIR /app
+COPY bin/Debug/netcoreapp2.0/linux-arm/publish .
+
+# set up network
+ENV ASPNETCORE_URLS http://+:80
+
+ENTRYPOINT ["dotnet", "<your-dll>.dll"]
+```
+
+Set current directory to the directory where your .csproj file is located and issue the following command:
+```
+dotnet publish -r linux-arm
+```
+
+Create the Docker container:
+```
+docker build -t <your-name>-arm32 -f Dockerfile.arm32 .
+```
+
+Now you need to tag and push the new Docker image to a registry, which needs to be accessable from your Kubernetes cluster. I'm using the Azure Container Registry, which is a private Dcoker registry, for this. I have not included detailed instructions, but it's basically just a "docker push ..." command.
+
+## Create a Kubernetes Deplyment and Service for your application
+
+Create a Deplyment Yaml file for your application. You need to substitute the application name below (weatherweb) with the name of your application. You also need to checkout the use of the secret for the private Docker registry (imagePullSecret) and replace with what you need to create.
+
+```
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: weatherweb
+  labels:
+    app: weatherweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weatherweb
+  template:
+    metadata:
+      labels:
+        app: weatherweb
+    spec:
+      containers:
+      - name: weatherweb
+        image: olavt.azurecr.io/weatherweb-arm32:66
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: olavt-azurecr-io
+```
+
+Create a Service Yaml file to be able to expose your application on the network:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: weatherweb
+  labels:
+    app: weatherweb
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+  selector:
+    app: weatherweb
+```
+
+Now, deploy to the cluster:
+
+```
+$ kubectl apply -f weatherweb-deployment.yaml
+$ kubectl apply -f weatherweb-service.yaml
+```
+
+Check the Service details:
+```
+$ kubectl describe services
+```
+
+Find the line for your service which looks similar to this:
+```
+NodePort:                 <unset>  30147/TCP
+```
+
+You should now be able to reach your ASP.NET 2.0 Web Application from a browser by typing the following address in a web browser:
+```
+http://<Static IP Address>:30147
+```
+The static IP address above is the address of one of your Raspberry PI machines, which you set during the preparationnprocess. Replace the port number with the port number you got assigned (in the output from "kubectl describe services").
