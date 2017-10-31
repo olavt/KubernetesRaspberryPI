@@ -1,5 +1,4 @@
-# Kubernetes Cluster Setup on Raspberry PI 3
-
+# Kubernetes Cluster Setup & Run ASP.NET Core 2.0 applications on Raspberry PI 3 
 ### Author: [Olav Tollefsen](https://www.linkedin.com/in/olavtollefsen/)
 
 ## Introduction
