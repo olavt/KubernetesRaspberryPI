@@ -61,7 +61,7 @@ sudo raspi-config
 ```
 You will find the SSH option under "5 Interfacing Options".
 
-### Disable Sawp
+### Disable Swap
 
 According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479]()https://github.com/kubernetes/kubeadm/issues/479 you will an error installing Kubernetes without disabling swap.
 
@@ -112,7 +112,7 @@ Kubernetes clusters consist of two types of machines:
 
 These steps should only be performed on the machine that will be designated as the Master.
 
-## Initializing your Master
+### Initializing your Master
 
 Perform this operation on the Raspberry PI that you want to designate as the Master:
 
@@ -150,6 +150,12 @@ kube-scheduler-k8s-master-1             1/1       Running   0          19h
 weave-net-p8vqq                         2/2       Running   0          19h
 ```
 
+### Install the Kubernetes Dashboard
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard-arm.yaml
+```
+
 You have now performed the steps required to setup the Master.
 
 ## Join a Node to the cluster
@@ -161,6 +167,24 @@ Perform this for every machine you want to join as a Node to the Kubernetes clus
 ```
 $ sudo kubeadm join --token 218b7b.1f188d49758886cb 192.168.1.10:6443 --discovery-token-ca-cert-hash sha256:9b8fc6dcc53e2af8dc1c9093c6b3354f4767a644c1dd9dfeebc19c3c04bd6f17
 ```
+
+## Prepare to run kubectl on your computer
+
+To be able to administrate the Kubertnetes cluster from a machine outside the cluster you need to install "kubectl" on your computer. Follow these instructions: [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
+## Configure and run the Kubernetes Dashboard
+
+To be able to use the Kubernetes Dashboard you need to configure Access Control for the dashboard. The process is documented here: [Access control](https://github.com/kubernetes/dashboard/wiki/Access-control)
+
+To run the Dashboard from a computer outside the cluster:
+
+```
+$ kubectl proxy
+```
+
+Open a web broweser and navigate to this Url:
+
+ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
 
 ## Create a Docker container with a .NET Core 2.0 Web Application
 
@@ -189,7 +213,7 @@ Create the Docker container:
 docker build -t <your-name>-arm32 -f Dockerfile.arm32 .
 ```
 
-Now you need to tag and push the new Docker image to a registry, which needs to be accessable from your Kubernetes cluster. I'm using the Azure Container Registry, which is a private Dcoker registry, for this. I have not included detailed instructions, but it's basically just a "docker push ..." command.
+Now you need to tag and push the new Docker image to a registry, which needs to be accessable from your Kubernetes cluster. I'm using the Azure Container Registry, which is a private Docker registry, for this. I have not included detailed instructions, but it's basically just a "docker push ..." command.
 
 ## Create a Kubernetes Deplyment and Service for your application
 
