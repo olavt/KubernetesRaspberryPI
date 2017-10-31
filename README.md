@@ -261,7 +261,7 @@ spec:
     app: weatherweb
 ```
 
-Now, deploy to the cluster:
+Now, deploy the application to the cluster:
 
 ```
 $ kubectl apply -f weatherweb-deployment.yaml
