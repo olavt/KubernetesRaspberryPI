@@ -1,0 +1,15 @@
+# ingress.yaml
+# kubectl create -f ingress.yaml
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: weatherweb
+          servicePort: 80
