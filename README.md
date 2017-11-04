@@ -122,7 +122,7 @@ This step will take a while.
 
 Take a note of the node-join information printed at the end of this command. You will need that information when you join the other machines (Nodes) to the cluster.
 
-### Prepare for riunning kubectl on the Master
+### Prepare for running kubectl on the Master
 ```
   mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
