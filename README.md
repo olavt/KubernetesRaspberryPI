@@ -167,7 +167,7 @@ Perform this for every machine you want to join as a Node to the Kubernetes clus
 $ sudo kubeadm join --token 218b7b.1f188d49758886cb 192.168.1.10:6443 --discovery-token-ca-cert-hash sha256:9b8fc6dcc53e2af8dc1c9093c6b3354f4767a644c1dd9dfeebc19c3c04bd6f17
 ```
 
-### Joining a Node to the cluster if token has expired
+### Joining a Node to the cluster if the join-token has expired
 
 Generate a new token by issuing the following command on the Master:
 
