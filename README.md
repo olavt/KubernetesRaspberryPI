@@ -10,7 +10,11 @@ This article documents the process of installing a Kubernetes Cluster on Raspber
 - A minimum of 2 x Raspberry PI 3 Model B with Micro SD card, power supply
 - Network cables (I have not gotten this process to work with WiFi only)
 - A switch to create a local network
-- A computer with the ability to connect a Micro SD card and software to burn an image to the card.
+- A computer with the ability to connect a Micro SD card and software to burn an image to the card
+
+*Kubernetes Cluster with 3x Raspberry PI 3 (1 Master + 2 Nodes)*
+
+![Raspberry PI 3 Kubernetes Cluster](./images/kubernetes-cluster.png) 
 
 ## Perform these steps for all the Raspberry PI nodes that will form the Kubernetes cluster
 
