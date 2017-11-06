@@ -159,11 +159,6 @@ weave-net-p8vqq                         2/2       Running   0          19h
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard-arm.yaml
 ```
 
-*Kubernetes Dashboard Pods*
-
-![Raspberry PI 3 Kubernetes Cluster](./images/kubernetes-dashboard.png) 
-
-
 You have now performed the steps required to setup the Master.
 
 ## Join a Node to the cluster
@@ -209,6 +204,10 @@ $ kubectl proxy
 Open a web broweser and navigate to this Url:
 
  http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy
+
+*Kubernetes Dashboard Pods*
+
+![Raspberry PI 3 Kubernetes Cluster](./images/kubernetes-dashboard.png) 
 
 ## Create a Docker container with a .NET Core 2.0 Web Application
 
