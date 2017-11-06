@@ -161,10 +161,26 @@ You have now performed the steps required to setup the Master.
 
 Remember to perform all the common preparation steps first!
 
-Perform this for every machine you want to join as a Node to the Kubernetes cluster. NOTE! Replace the command below with the information you obtained when running "kubeadm init".
+Perform this for every machine you want to join as a Node to the Kubernetes cluster. NOTE! Replace the command below with the information you obtained when running "kubeadm init" (see below if more than 24 hours passed since you created the cluster or if you did not record the information).
 
 ```
 $ sudo kubeadm join --token 218b7b.1f188d49758886cb 192.168.1.10:6443 --discovery-token-ca-cert-hash sha256:9b8fc6dcc53e2af8dc1c9093c6b3354f4767a644c1dd9dfeebc19c3c04bd6f17
+```
+
+### Joining a Node to the cluster if token has expired
+
+Generate a new token by issuing the following command on the Master:
+
+```
+$ sudo kubeadm token create
+```
+
+This is the value you pass to the --token part of the command.
+
+If you did not record the information from "kubeadm init" and need to get the value for the --discovery-token-ca-cert-hash, you can issue this command at the Master:
+
+```
+$ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
 ## Prepare to run kubectl on your computer
