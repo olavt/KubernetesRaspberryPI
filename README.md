@@ -307,3 +307,9 @@ You should now be able to reach your ASP.NET 2.0 Web Application from a browser 
 http://<Static IP Address>:30147
 ```
 The static IP address above is the address of one of your Raspberry PI machines, which you set during the preparationnprocess. Replace the port number with the port number you got assigned (in the output from "kubectl describe services").
+
+## Using Træfik as Kubernetes Ingress Controller
+
+```
+$ kubectl apply -f traefik-rbac.yaml
+```
