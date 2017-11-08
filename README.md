@@ -310,6 +310,32 @@ The static IP address above is the address of one of your Raspberry PI machines,
 
 ## Using Træfik as Kubernetes Ingress Controller
 
+### Role Based Access Control configuration
+
+Kubernetes introduced Role Based Access Control (RBAC) in version 1.6+ to allow fine-grained control of Kubernetes resources and api.
+
+If your cluster is configured with RBAC, you may need to authorize Træfik to use the Kubernetes API using ClusterRole and ClusterRoleBinding resources.
+
 ```
-$ kubectl apply -f traefik-rbac.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-rbac.yaml
+```
+
+### Deploy Træfik to the cluster
+
+```
+$ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-deployment.yaml
+```
+
+Check that the Træfik Ingress Controller Pod is running
+
+```
+$ kubectl get pods --namespace=kube-system
+```
+
+### Expose the Træfik Web UI
+
+Creating a Service and an Ingress that will expose the Træfik Web UI.
+
+```
+$ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-web-ui.yaml
 ```
