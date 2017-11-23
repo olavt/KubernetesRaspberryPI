@@ -242,7 +242,7 @@ Now you need to tag and push the new Docker image to a registry, which needs to 
 
 ### Create a secret for pulling the image from a private registry
 
-Create a secret for a private Docker registry:
+If you want to be able to pull an image from a private Docker registry, you need to create a secret for it.
 
 ```
 $ kubectl create secret docker-registry <your-secret-name> --docker-server=<your-docker-server> --docker-username=<your-username> --docker-password=<your-password> --docker-email=<your-email>
