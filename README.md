@@ -240,7 +240,7 @@ Now you need to tag and push the new Docker image to a registry, which needs to 
 
 ## Create a Kubernetes Deplyment and Service for your application
 
-Create a Deplyment Yaml file for your application. You need to substitute the application name below (weatherweb) with the name of your application. You also need to checkout the use of the secret for the private Docker registry (imagePullSecret) and replace with what you need to create.
+Create a Deplyment Yaml file for your application. You need to substitute the application name below (weatherweb) with the name of your application. You also need to checkout the use of the secret for the private Docker registry (imagePullSecret) and replace with what you need to create. The use of secrets for a private Docker registry is documented here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
 ```
 apiVersion: apps/v1beta2
@@ -283,6 +283,12 @@ spec:
   - port: 80
   selector:
     app: weatherweb
+```
+
+Create a secret for a private Docker registry:
+
+```
+$ kubectl create secret docker-registry <your-secret-name> --docker-server=<your-docker-server> --docker-username=<your-username> --docker-password=<your-password> --docker-email=<your-email>
 ```
 
 Now, deploy the application to the cluster:
