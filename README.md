@@ -248,7 +248,7 @@ If you want to be able to pull an image from a private Docker registry, you need
 $ kubectl create secret docker-registry <your-secret-name> --docker-server=<your-docker-server> --docker-username=<your-username> --docker-password=<your-password> --docker-email=<your-email>
 ```
 
-Create a Deplyment Yaml file for your application. You need to substitute the application name below (weatherweb) with the name of your application. You also need to checkout the use of the secret for the private Docker registry (imagePullSecret) and replace with what you need to create. The use of secrets for a private Docker registry is documented here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+Create a Deployment Yaml file for your application. You need to substitute the application name below (weatherweb) with the name of your application. You also need to checkout the use of the secret for the private Docker registry (imagePullSecret) and replace with what you need to create. The use of secrets for a private Docker registry is documented here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
 ```
 apiVersion: apps/v1beta2
