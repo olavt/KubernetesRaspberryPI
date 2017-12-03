@@ -46,7 +46,13 @@ $ sudo userdel -r pi
 
 ### Configure Networking
 
-I like to set static IP addresses for the Raspberry PI cluster nodes. Add the following to the bottom of the /etc/dhcpcd.conf file:
+I like to set static IP addresses for the Raspberry PI cluster nodes. Edit the /etc/dhcpcd.conf file:
+
+```
+$ sudo nano /etc/dhcpcd.conf
+```
+
+Add the following to the bottom of the file:
 
 ```
 interface=eth0
@@ -77,7 +83,7 @@ $ sudo dphys-swapfile swapoff && \
 
 Add the following to the end of the existing line of `/boot/cmdline.txt`:
 ```
-cgroup_enable=cpuset cgroup_enable=memory
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
 ```
 
 ### Reboot the Raspberry PI
