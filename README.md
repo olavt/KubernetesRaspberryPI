@@ -193,6 +193,17 @@ If you did not record the information from "kubeadm init" and need to get the va
 $ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
 ```
 
+### Check the status of the nodes in the cluster
+
+Run the following command on the Master
+
+```
+$ kubectl get nodes
+NAME           STATUS    ROLES     AGE       VERSION
+k8s-master-1   Ready     master    8m        v1.8.4
+k8s-node-1     Ready     <none>    1m        v1.8.4
+```
+
 ## Prepare to run kubectl on your computer
 
 To be able to administrate the Kubertnetes cluster from a machine outside the cluster you need to install "kubectl" on your computer. Follow these instructions: [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
