@@ -62,13 +62,15 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
-### Change hostname / enable SSH
+### Change hostname / enable SSH / change local timezone
 
-Invoke the raspi-config utility to change the hostname and enable SSH:
+Invoke the raspi-config utility to change the hostname, enable SSH and change the local timezone:
 ```
 sudo raspi-config
 ```
 You will find the SSH option under "5 Interfacing Options".
+
+You may also want to change the local timezone. The "Change Timezone" option is under "4 Localisation Options".
 
 ### Disable Swap
 
