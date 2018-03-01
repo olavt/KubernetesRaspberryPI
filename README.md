@@ -44,6 +44,13 @@ To remove the default user you may need to reboot the Raspberry PI, login using 
 $ sudo userdel -r pi
 ```
 
+### Update the Raspbian OS
+
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade
+```
+
 ### Configure Networking
 
 I like to set static IP addresses for the Raspberry PI cluster nodes. Edit the /etc/dhcpcd.conf file:
@@ -104,6 +111,8 @@ To be able to issue Docker commands without sudo:
 ```
 $ sudo usermod -aG docker <your-username>
 ```
+
+Logout from the current user and login again for the above command to take effect.
 
 ### Install required Kubernetes software
 ```
