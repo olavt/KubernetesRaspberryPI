@@ -45,7 +45,28 @@ Add the new user to sudoers:
 $ sudo usermod -aG sudo <new-username>
 ```
 
-To remove the default user you may need to reboot the Raspberry PI, login using the new-username and then perform this command:
+### Disable Swap
+
+According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479]()https://github.com/kubernetes/kubeadm/issues/479 you will an error installing Kubernetes without disabling swap.
+
+To disable swap:
+```
+$ sudo dphys-swapfile swapoff && \
+  sudo dphys-swapfile uninstall && \
+  sudo update-rc.d dphys-swapfile remove
+```
+
+Add the following to the end of the existing line of `/boot/cmdline.txt`:
+```
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
+```
+
+### Reboot the Raspberry PI
+```
+$ sudo reboot
+```
+
+### Remove the default user
 
 ```
 $ sudo userdel -r pi
@@ -78,27 +99,6 @@ sudo raspi-config
 You will find the SSH option under "5 Interfacing Options".
 
 You may also want to change the local timezone. The "Change Timezone" option is under "4 Localisation Options".
-
-### Disable Swap
-
-According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479]()https://github.com/kubernetes/kubeadm/issues/479 you will an error installing Kubernetes without disabling swap.
-
-To disable swap:
-```
-$ sudo dphys-swapfile swapoff && \
-  sudo dphys-swapfile uninstall && \
-  sudo update-rc.d dphys-swapfile remove
-```
-
-Add the following to the end of the existing line of `/boot/cmdline.txt`:
-```
-cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
-```
-
-### Reboot the Raspberry PI
-```
-$ sudo reboot
-```
 
 ### Install Docker
 
