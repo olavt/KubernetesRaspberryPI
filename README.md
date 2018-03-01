@@ -24,6 +24,13 @@ On a computer download the Linux operating system for Raspberry PI 3. I'm using 
 
 Burn the downloaded operating system image to the Micro SD card. You will find more details in this [Installation Guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
+### Update the Raspbian OS
+
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade
+```
+
 ### Add a new user and remove the default user
 
 It's s good idea to create a new user for you on the Raspberry PI and remove the default user.
@@ -42,13 +49,6 @@ To remove the default user you may need to reboot the Raspberry PI, login using 
 
 ```
 $ sudo userdel -r pi
-```
-
-### Update the Raspbian OS
-
-```
-$ sudo apt-get update
-$ sudo apt-get upgrade
 ```
 
 ### Configure Networking
