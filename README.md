@@ -237,6 +237,20 @@ Open a web broweser and navigate to this Url:
 
 ![Raspberry PI 3 Kubernetes Cluster](./images/kubernetes-dashboard.png) 
 
+## Remove a node from the Kubernetes cluster
+
+To remove a node from the Kubernetes cluster first issue the following command to safely evict all of your pods from a node.
+
+```
+$ kubectl drain --ignore-daemonsets <NodeName> 
+```
+
+When the pods have been deleted and are up and running on other nodes in the cluster, delete the node with this command:
+
+```
+$ kubectl delete node <NodeName> 
+```
+
 ## Create a Docker container with a .NET Core 2.0 Web Application
 
 These steps needs to be performed on a computer with support for building .NET Core 2.0 applications.
