@@ -237,18 +237,26 @@ Open a web broweser and navigate to this Url:
 
 ![Raspberry PI 3 Kubernetes Cluster](./images/kubernetes-dashboard.png) 
 
-## Remove a node from the Kubernetes cluster
+## Drain node in preparation for maintenance or deletion
 
-To remove a node from the Kubernetes cluster first issue the following command to safely evict all of your pods from a node.
+The given node will be marked unschedulable to prevent new pods from arriving. Issue the following command to safely evict all of your pods from the node:
 
 ```
-$ kubectl drain --ignore-daemonsets <NodeName> 
+$ kubectl drain --ignore-daemonsets <Node> 
 ```
+
+## Make the node schedulable again
+
+```
+$ kubectl uncordon <Node> 
+```
+
+## Remove a node from the cluster
 
 When the pods have been deleted and are up and running on other nodes in the cluster, delete the node with this command:
 
 ```
-$ kubectl delete node <NodeName> 
+$ kubectl delete node <Node> 
 ```
 
 ## Create a Docker container with a .NET Core 2.0 Web Application
