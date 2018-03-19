@@ -381,7 +381,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI
 ### Deploy Træfik to the cluster
 
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-deployment.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-daemonset.yaml
 ```
 
 Check that the Træfik Ingress Controller Pod is running
