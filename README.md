@@ -155,6 +155,12 @@ Take a note of the node-join information printed at the end of this command. You
 $ kubectl apply -f https://git.io/weave-kube-1.6
 ```
 
+or
+
+```
+$ curl -sSL https://rawgit.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml | sed "s/amd64/arm/g" | kubectl create -f -
+```
+
 ### Check status
 
 You should see all services up and running (after giving it a few minutes after installing the network).
@@ -397,3 +403,5 @@ Creating a Service and an Ingress that will expose the Træfik Web UI.
 ```
 $ kubectl apply -f https://raw.githubusercontent.com/olavt/KubernetesRaspberryPI/master/traefik-web-ui.yaml
 ```
+
+To test you need to add a DNS entry for 'traefik' pointing to the static IP address of one of the cluster nodes. Then open hppt://traefik in your web browser. You should now see the Traefik Web UI.
