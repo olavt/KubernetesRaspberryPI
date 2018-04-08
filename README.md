@@ -155,6 +155,11 @@ Take a note of the node-join information printed at the end of this command. You
 $ kubectl apply -f https://git.io/weave-kube-1.6
 ```
 
+```
+$ kubectl apply -f \
+ "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+```
+
 or
 
 ```
