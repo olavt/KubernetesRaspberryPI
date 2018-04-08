@@ -61,6 +61,10 @@ Add the following to the end of the existing line of `/boot/cmdline.txt`:
 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
 ```
 
+```
+$ sudo nano /boot/cmdline.txt
+```
+
 ### Reboot the Raspberry PI
 ```
 $ sudo reboot
