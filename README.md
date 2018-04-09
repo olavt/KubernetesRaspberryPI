@@ -118,12 +118,28 @@ $ sudo usermod -aG docker <your-username>
 
 Logout from the current user and login again for the above command to take effect.
 
-### Install required Kubernetes software
+### Install required Kubernetes software (latest version)
 ```
 $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
   echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
   sudo apt-get update -q && \
   sudo apt-get install -qy kubeadm
+```
+
+### Install required Kubernetes software (specific version)
+
+If you want to install a specific version of Kubernets, the installation command looks like this:
+
+```
+$ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+  echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+  sudo apt-get update -q && \
+  sudo apt-get install -qy kubelet=1.9.4-00 kubectl=1.9.4-00 kubeadm=1.9.4-00
+```
+
+Replace the version in the command above with the version you want to install. To see a list of the available version numbers, you can issue the following command:
+```
+curl -s https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages | grep Version | awk '{print $2}'
 ```
 
 You have now performed the setup that needs to be performed for all the Raspberry PI machines, which will participate in the Kubernetes cluster.
