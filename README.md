@@ -47,7 +47,7 @@ $ sudo usermod -aG sudo <new-username>
 
 ### Disable Swap
 
-According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479]()https://github.com/kubernetes/kubeadm/issues/479 you will an error installing Kubernetes without disabling swap.
+According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479](https://github.com/kubernetes/kubeadm/issues/479) you will an error installing Kubernetes without disabling swap.
 
 To disable swap:
 ```
@@ -174,6 +174,8 @@ Take a note of the node-join information printed at the end of this command. You
 ```
 $ kubectl apply -f https://git.io/weave-kube-1.6
 ```
+
+or
 
 ```
 $ kubectl apply -f \
