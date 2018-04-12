@@ -276,9 +276,12 @@ Run the following command on the Master
 
 ```
 $ kubectl get nodes
+olavt@k8s-master-1:~ $ kubectl get nodes
 NAME           STATUS    ROLES     AGE       VERSION
-k8s-master-1   Ready     master    8m        v1.8.4
-k8s-node-1     Ready     <none>    1m        v1.8.4
+k8s-master-1   Ready     master    4h        v1.10.0
+k8s-node-1     Ready     <none>    2h        v1.10.0
+k8s-node-2     Ready     <none>    27m       v1.10.0
+k8s-node-3     Ready     <none>    1m        v1.10.0
 ```
 
 ## Prepare to run kubectl on your computer
