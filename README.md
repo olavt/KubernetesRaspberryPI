@@ -45,6 +45,20 @@ Add the new user to sudoers:
 $ sudo usermod -aG sudo <new-username>
 ```
 
+### Add required kernel command line parameters for Docker / Kubernetes
+
+Edit `/boot/cmdline.txt`:
+
+```
+$ sudo nano /boot/cmdline.txt
+```
+
+Add the following to the end of the existing line:
+
+```
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
+```
+
 ### Disable Swap
 
 According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on Raspberry Pi #479](https://github.com/kubernetes/kubeadm/issues/479) you will an error installing Kubernetes without disabling swap.
@@ -54,15 +68,6 @@ To disable swap:
 $ sudo dphys-swapfile swapoff && \
   sudo dphys-swapfile uninstall && \
   sudo update-rc.d dphys-swapfile remove
-```
-
-Add the following to the end of the existing line of `/boot/cmdline.txt`:
-```
-cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
-```
-
-```
-$ sudo nano /boot/cmdline.txt
 ```
 
 ### Reboot the Raspberry PI
@@ -126,6 +131,8 @@ $ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key a
   sudo apt-get install -qy kubeadm
 ```
 
+or
+
 ### Install required Kubernetes software (specific version)
 
 If you want to install a specific version of Kubernets, the installation command looks like this:
@@ -154,11 +161,23 @@ These steps should only be performed on the machine that will be designated as t
 
 ### Initializing your Master
 
-Perform this operation on the Raspberry PI that you want to designate as the Master:
+Perform this operation on the Raspberry PI that you want to designate as the Master.
+
+For Flannel networking:
+
+```
+$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+
+or
+
+For Wave networking:
 
 ```
 $ sudo kubeadm init
 ```
+
+
 This step will take a while.
 
 Take a note of the node-join information printed at the end of this command. You will need that information when you join the other machines (Nodes) to the cluster.
