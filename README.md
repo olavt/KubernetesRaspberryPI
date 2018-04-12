@@ -113,6 +113,10 @@ You will find the option to change hostname under "2 Network Options".
 $ sudo reboot
 ```
 
+### Logon using the new user
+
+Logon to your Raspberry PI using the new user you created.
+
 ### Remove the default user
 
 ```
