@@ -24,6 +24,17 @@ On a computer download the Linux operating system for Raspberry PI 3. I'm using 
 
 Burn the downloaded operating system image to the Micro SD card. You will find more details in this [Installation Guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
+### Enable SSH
+
+SSH is diasabled by Raspbian by default. If you want to logon remotely using SSH, you need to ogon to the Raspberry PI using a screen / keyboard connected directly to the hardware and enable SSH using the raspi-config utility. You will find the SSH enable / disable option under "5 Interface Options":
+
+```
+sudo raspi-config
+```
+You will find the SSH option under "5 Interfacing Options".
+
+You may also want to change the local timezone. The "Change Timezone" option is under "4 Localisation Options".
+
 ### Update the Raspbian OS
 
 ```
@@ -70,20 +81,9 @@ $ sudo dphys-swapfile swapoff && \
   sudo update-rc.d dphys-swapfile remove
 ```
 
-### Reboot the Raspberry PI
-```
-$ sudo reboot
-```
-
-### Remove the default user
-
-```
-$ sudo userdel -r pi
-```
-
 ### Configure Networking
 
-I like to set static IP addresses for the Raspberry PI cluster nodes. Edit the /etc/dhcpcd.conf file:
+To set static IP addresses for the Raspberry PI cluster nodes. Edit the /etc/dhcpcd.conf file:
 
 ```
 $ sudo nano /etc/dhcpcd.conf
@@ -99,7 +99,7 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
-### Change hostname / enable SSH / change local timezone
+### Change hostname / change local timezone
 
 Invoke the raspi-config utility to change the hostname, enable SSH and change the local timezone:
 ```
@@ -108,6 +108,17 @@ sudo raspi-config
 You will find the SSH option under "5 Interfacing Options".
 
 You may also want to change the local timezone. The "Change Timezone" option is under "4 Localisation Options".
+
+### Reboot the Raspberry PI
+```
+$ sudo reboot
+```
+
+### Remove the default user
+
+```
+$ sudo userdel -r pi
+```
 
 ### Install Docker
 
