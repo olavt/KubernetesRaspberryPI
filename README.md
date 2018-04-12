@@ -99,15 +99,12 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
-### Change hostname / change local timezone
+### Change hostname
 
-Invoke the raspi-config utility to change the hostname, enable SSH and change the local timezone:
+Invoke the raspi-config utility to change the hostname:
 ```
 sudo raspi-config
 ```
-You will find the SSH option under "5 Interfacing Options".
-
-You may also want to change the local timezone. The "Change Timezone" option is under "4 Localisation Options".
 
 ### Reboot the Raspberry PI
 ```
