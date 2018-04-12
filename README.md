@@ -106,6 +106,8 @@ Invoke the raspi-config utility to change the hostname:
 sudo raspi-config
 ```
 
+You will find the option to change hostname under "2 Network Options".
+
 ### Reboot the Raspberry PI
 ```
 $ sudo reboot
