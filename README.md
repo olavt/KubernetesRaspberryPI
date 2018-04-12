@@ -26,7 +26,7 @@ Burn the downloaded operating system image to the Micro SD card. You will find m
 
 ### Enable SSH
 
-SSH is diasabled by Raspbian by default. If you want to logon remotely using SSH, you need to ogon to the Raspberry PI using a screen / keyboard connected directly to the hardware and enable SSH using the raspi-config utility. You will find the SSH enable / disable option under "5 Interface Options":
+SSH is diasabled by Raspbian by default. If you want to logon remotely using SSH, you need to ogon to the Raspberry PI using a screen / keyboard connected directly to the hardware and enable SSH using the raspi-config utility:
 
 ```
 sudo raspi-config
