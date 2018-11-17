@@ -204,12 +204,8 @@ Take a note of the node-join information printed at the end of this command. You
 ```
 
 ### Install networking for Kubernetes
-```
-$ kubectl apply -f https://git.io/weave-kube-1.6
-```
 
-or
-
+Weave:
 ```
 $ kubectl apply -f \
  "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
@@ -217,6 +213,13 @@ $ kubectl apply -f \
 
 or
 
+```
+$ kubectl apply -f https://git.io/weave-kube-1.6
+```
+
+or
+
+Flannel:
 ```
 $ curl -sSL https://rawgit.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml | sed "s/amd64/arm/g" | kubectl create -f -
 ```
