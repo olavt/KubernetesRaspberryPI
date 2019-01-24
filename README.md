@@ -259,7 +259,13 @@ $ sudo kubeadm join --token 218b7b.1f188d49758886cb 192.168.1.10:6443 --discover
 
 ### Joining a Node to the cluster if the join-token has expired
 
-Generate a new token by issuing the following command on the Master:
+Alternative A: Issue the following command to generate a new token and see the command to use to join a new node to the cluster:
+
+```
+$ sudo kubeadm token create --print-join-command
+```
+
+Aletrnative B: Generate a new token by issuing the following command on the Master:
 
 ```
 $ sudo kubeadm token create
