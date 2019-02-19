@@ -242,8 +242,11 @@ weave-net-p8vqq                         2/2       Running   0          19h
 ### Install the Kubernetes Dashboard
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard-arm.yaml
+kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard-arm.yaml
 ```
+
+For details on releases of the Kubernetes Dashboard check here: https://github.com/kubernetes/dashboard/releases
+
 
 You have now performed the steps required to setup the Master.
 
