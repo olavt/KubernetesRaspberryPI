@@ -241,7 +241,7 @@ weave-net-p8vqq                         2/2       Running   0          19h
 
 ### Install the Kubernetes Dashboard
 
-Note! You may want to add the --enable-skip-login to the below yaml file. In that case copy it to local storage and add the option under args for the kubernetes-dashboard container. 
+Note! You may want to add the --enable-skip-login to the below yaml file. In that case copy it to local storage and add the option under args for the kubernetes-dashboard container and then run kubectl apply -f kubernetes-dashboard-arm.yaml. 
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard-arm.yaml
