@@ -77,8 +77,8 @@ According to this article: [Cannot deploy Kubernetes 1.8.0 with Kubeadm 1.8.0 on
 To disable swap:
 ```
 $ sudo dphys-swapfile swapoff && \
-  sudo dphys-swapfile uninstall && \
-  sudo update-rc.d dphys-swapfile remove
+sudo dphys-swapfile uninstall && \
+sudo systemctl disable dphys-swapfile
 ```
 
 ### Configure Networking
