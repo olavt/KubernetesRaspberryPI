@@ -126,6 +126,7 @@ $ sudo userdel -r pi
 ### Install Docker
 
 ```
+$ export VERSION=18.09 && curl -sSL get.docker.com | sh
 $ curl -fsSL get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 ```
@@ -133,6 +134,37 @@ $ sudo sh get-docker.sh
 To be able to issue Docker commands without sudo:
 ```
 $ sudo usermod -aG docker <your-username>
+```
+
+### Configure Docker
+
+Create a file named /etc/docker/daemon.json
+
+```
+$ sudo nano /etc/docker/daemon.json
+```
+
+Add the following content to the file:
+
+```
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+```
+
+```
+$ sudo mkdir -p /etc/systemd/system/docker.service.d
+```
+
+### Restart docker.
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker
 ```
 
 Logout from the current user and login again for the above command to take effect.
