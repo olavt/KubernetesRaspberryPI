@@ -126,7 +126,6 @@ $ sudo userdel -r pi
 ### Install Docker
 
 ```
-$ export VERSION=18.09 && curl -sSL get.docker.com | sh
 $ curl -fsSL get.docker.com -o get-docker.sh
 $ sudo sh get-docker.sh
 ```
