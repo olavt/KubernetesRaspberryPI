@@ -135,7 +135,11 @@ To be able to issue Docker commands without sudo:
 $ sudo usermod -aG docker <your-username>
 ```
 
+Logout from the current user and login again for the above command to take effect.
+
 ### Configure Docker
+
+Enable forwarding from Docker containers to the outside world:
 
 Edit /etc/rc.local
 
@@ -166,8 +170,6 @@ Create a file named /etc/docker/daemon.json
 ```
 $ sudo nano /etc/docker/daemon.json
 ```
-
-Logout from the current user and login again for the above command to take effect.
 
 Add the following content to the file:
 
