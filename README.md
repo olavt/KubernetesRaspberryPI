@@ -139,6 +139,10 @@ $ sudo usermod -aG docker <your-username>
 
 Edit /etc/rc.local
 
+```
+$ sudo nano /etc/rc.local
+```
+
 Add the following lines
 
 ```
@@ -186,11 +190,6 @@ $ sudo mkdir -p /etc/systemd/system/docker.service.d
 ```
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
-```
-
-
-```
-$ sudo iptables -P FORWARD ACCEPT
 ```
 
 ### Install required Kubernetes software (latest version)
