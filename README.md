@@ -99,6 +99,10 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
+#### Configure networking for Flannel
+
+$ sudo sysctl net.bridge.bridge-nf-call-iptables=1
+
 ### Change hostname
 
 Invoke the raspi-config utility to change the hostname:
@@ -143,6 +147,8 @@ Create a file named /etc/docker/daemon.json
 $ sudo nano /etc/docker/daemon.json
 ```
 
+Logout from the current user and login again for the above command to take effect.
+
 Add the following content to the file:
 
 ```
@@ -165,8 +171,6 @@ $ sudo mkdir -p /etc/systemd/system/docker.service.d
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
 ```
-
-Logout from the current user and login again for the above command to take effect.
 
 ### Install required Kubernetes software (latest version)
 ```
