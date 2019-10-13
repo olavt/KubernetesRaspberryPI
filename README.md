@@ -137,6 +137,26 @@ $ sudo usermod -aG docker <your-username>
 
 ### Configure Docker
 
+Edit /etc/rc.local
+
+Add the following lines
+
+```
+# Loop until 'docker version' exits with 0.
+until docker version > /dev/null 2>&1
+do
+  sleep 1
+done
+
+iptables -P FORWARD ACCEPT
+```
+
+Execute the command:
+
+```
+$ sudo iptables -P FORWARD ACCEPT
+```
+
 Create a file named /etc/docker/daemon.json
 
 ```
@@ -166,6 +186,11 @@ $ sudo mkdir -p /etc/systemd/system/docker.service.d
 ```
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart docker
+```
+
+
+```
+$ sudo iptables -P FORWARD ACCEPT
 ```
 
 ### Install required Kubernetes software (latest version)
