@@ -139,7 +139,7 @@ Logout from the current user and login again for the above command to take effec
 
 ### Configure Docker
 
-Enable forwarding from Docker containers to the outside world:
+Enable forwarding from Docker containers to the outside world (https://docs.docker.com/network/bridge/):
 
 Edit /etc/rc.local
 
