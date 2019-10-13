@@ -99,10 +99,6 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
-#### Configure networking for Flannel
-
-$ sudo sysctl net.bridge.bridge-nf-call-iptables=1
-
 ### Change hostname
 
 Invoke the raspi-config utility to change the hostname:
@@ -216,6 +212,8 @@ For Flannel networking:
 
 ```
 $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+
+$ sudo sysctl net.bridge.bridge-nf-call-iptables=1
 ```
 
 or
