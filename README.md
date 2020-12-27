@@ -99,6 +99,11 @@ static domain_name_servers=8.8.8.8
 ```
 The addresses above are just examples. Replace with the approperiate addresses for your environment.
 
+### Show assigned IP addresses (remember that IP addresses may only change on reboot)
+```
+$ ip address show
+```
+
 ### Change hostname
 
 Invoke the raspi-config utility to change the hostname:
